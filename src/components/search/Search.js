@@ -6,8 +6,10 @@ const Search = ({ searchQuery, handleSearch }) => {
     <div className="search-container">
       <input
         className="input-text"
+        placeholder="Search todos..."
         value={searchQuery}
         onChange={handleSearch}
+        aria-label="search"
       />
     </div>
   );
