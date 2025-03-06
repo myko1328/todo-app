@@ -31,6 +31,7 @@ const InputTodo = ({ addTodoProps }) => {
           value={title}
           name="title"
           onChange={onChange}
+          aria-label="add-todo"
         />
         <input type="submit" className="input-submit" value="Submit" />
       </form>
