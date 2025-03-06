@@ -1,13 +1,13 @@
 import React, { useState } from 'react';
-import TodosList from './TodosList';
-import Header from './Header';
-import InputTodo from './InputTodo';
-// import uuid from "uuid";
+import TodosList from '../todo-list/TodosList';
+import Header from '../header/Header';
 import { v4 as uuidv4 } from 'uuid';
-import Search from './search/Search';
+import Search from '../search/Search';
+import InputTodo from '../input-todo/InputTodo';
 
 const TodoContainer = () => {
   const [searchQuery, setSearchQuery] = useState('');
+  const [editId, setEditId] = useState(null);
   const [todos, setTodos] = useState([
     {
       // id: uuid.v4(),
@@ -28,6 +28,10 @@ const TodoContainer = () => {
       completed: false,
     },
   ]);
+
+  const filteredTodos = todos.filter((todo) =>
+    todo.title.toLowerCase().includes(searchQuery.toLowerCase())
+  );
 
   const handleChange = (id) => {
     setTodos((prevState) =>
@@ -59,9 +63,16 @@ const TodoContainer = () => {
     setSearchQuery(e.target.value);
   };
 
-  const filteredTodos = todos.filter((todo) =>
-    todo.title.toLowerCase().includes(searchQuery.toLowerCase())
-  );
+  const updateTodo = (id, newTitle) => {
+    setTodos((prevState) =>
+      prevState.map((todo) => ({
+        ...todo,
+        title: todo.id === id ? newTitle : todo.title,
+      }))
+    );
+
+    setEditId(null);
+  };
 
   return (
     <>
@@ -72,6 +83,9 @@ const TodoContainer = () => {
           todos={filteredTodos}
           handleChangeProps={handleChange}
           deleteTodoProps={delTodo}
+          setEditId={setEditId}
+          editId={editId}
+          updateTodo={updateTodo}
         />
       </div>
 
