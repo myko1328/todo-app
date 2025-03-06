@@ -24,7 +24,7 @@ const TodoItem = ({
     setNewTitle(title);
   };
   return (
-    <li className="todo-item">
+    <li className="todo-item" data-testid="todo-item">
       {editId === id ? (
         <>
           <input
