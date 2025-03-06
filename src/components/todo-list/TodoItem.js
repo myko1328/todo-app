@@ -1,11 +1,5 @@
 import React, { useState } from 'react';
-
-const completedStyle = {
-  fontStyle: 'italic',
-  color: '#d35e0f',
-  opacity: 0.4,
-  textDecoration: 'line-through',
-};
+import './index.css';
 
 const TodoItem = ({
   todo: { completed, id, title },
@@ -51,8 +45,8 @@ const TodoItem = ({
             onChange={() => handleChangeProps(id)}
           />
           <button onClick={() => deleteTodoProps(id)}>Delete</button>
-          <button onClick={() => setEditId(id)}>Edit</button>
-          <span style={completed ? completedStyle : null}>{title}</span>
+          {!completed && <button onClick={() => setEditId(id)}>Edit</button>}
+          <span className={`${completed ? 'completed' : ''}`}>{title}</span>
         </>
       )}
     </li>
