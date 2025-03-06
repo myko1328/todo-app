@@ -4,8 +4,10 @@ import Header from './Header';
 import InputTodo from './InputTodo';
 // import uuid from "uuid";
 import { v4 as uuidv4 } from 'uuid';
+import Search from './search/Search';
 
 const TodoContainer = () => {
+  const [searchQuery, setSearchQuery] = useState('');
   const [todos, setTodos] = useState([
     {
       // id: uuid.v4(),
@@ -53,16 +55,28 @@ const TodoContainer = () => {
     setTodos((prevState) => [...prevState, newTodo]);
   };
 
+  const handleSearch = (e) => {
+    setSearchQuery(e.target.value);
+  };
+
+  const filteredTodos = todos.filter((todo) =>
+    todo.title.toLowerCase().includes(searchQuery.toLowerCase())
+  );
+
   return (
-    <div className="container">
-      <Header />
-      <InputTodo addTodoProps={addTodoItem} />
-      <TodosList
-        todos={todos}
-        handleChangeProps={handleChange}
-        deleteTodoProps={delTodo}
-      />
-    </div>
+    <>
+      <div className="container">
+        <Header />
+        <InputTodo addTodoProps={addTodoItem} />
+        <TodosList
+          todos={filteredTodos}
+          handleChangeProps={handleChange}
+          deleteTodoProps={delTodo}
+        />
+      </div>
+
+      <Search searchQuery={searchQuery} handleSearch={handleSearch} />
+    </>
   );
 };
 
